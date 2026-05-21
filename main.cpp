@@ -74,6 +74,7 @@ int main() {
         addRandomCustomer(front, back, names, drinks);
         addRandomMuffinCustomer(muffinLine, names, muffins);
         addRandomBraceletCustomer(braceletLine, names, bracelets);
+        addRandomAvocadoCustomer(avocadoLine, names, avocados);
     }
 
     for (int numRound{1}; numRound <= MAX_ROUNDS; ++numRound) {
@@ -128,6 +129,21 @@ int main() {
             cout << "New bracelet customer joined\n";
         } else {
             cout << "No new bracelet customer joined\n";
+        }
+
+        if (!avocadoLine.empty()) {
+            cout << "Avacado served: " << avocadoLine.front().name << ": "
+                 << avocadoLine.front().drinkOrder << '\n';
+            avocados->erase();
+        } else {
+            cout << "No avacoda customer joined\n";
+        }
+
+        if (rand() % 2 == 0) {
+            addRandomAvocadoCustomer(avocadoLine, names, avocados);
+            cout << "New avocado customer joined\n";
+        } else {
+            cout << "No new avocado customer joind\n";
         }
 
         cout << '\n';
@@ -189,5 +205,5 @@ void addRandomAvocadoCustomer(queue<Node>& avocadoLine,
     avocadoCustomer.drinkOrder = avocados[rand() % SIZE_ARR];
     avocadoCustomer.next = nullptr;
 
-    avocadoLine.push_back(avocadoCustomer);
+    avocadoLine.push(avocadoCustomer);
 }
