@@ -6,7 +6,7 @@
 using namespace std;
 
 const int SIZE_ARR{10};
-const int  NUM_CUSTOMERS{8};
+const int NUM_CUSTOMERS{8};
 
 struct Node {
     string name;
@@ -29,10 +29,6 @@ int main() {
     Node* front{};
     Node* back{};
 
-    int rndNameIndex { rand() % SIZE_ARR };
-    int rndDrinkIndex { rand() % SIZE_ARR};
-    cout << names[rndNameIndex] << ": " << drinks[rndDrinkIndex] << '\n';
-
     for (int i{0}; i < NUM_CUSTOMERS; ++i) {
         int rndNameIndex{rand() % SIZE_ARR};
         int rndDrinkIndex{rand() % SIZE_ARR};
@@ -40,11 +36,22 @@ int main() {
         Node* customer{new Node};
         customer->name = names[rndNameIndex];
         customer->drinkOrder = drinks[rndDrinkIndex];
+        customer->next = nullptr;
 
         if (front == nullptr) {
             front = customer;
             back = customer;
+        } else {
+            back->next = customer;
+            back = customer;
         }
+    }
+
+    cout << "Coffee booth line: \n";
+    Node* current{front};
+    while (current != nullptr) {
+        cout << current->name << ": " << current->drinkOrder << '\n';
+        current = current->next;
     }
 
     return 0;
