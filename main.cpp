@@ -16,6 +16,9 @@ struct Node {
     Node* next;
 };
 
+void addRandomCustomer(Node*& front, Node*& back,
+                       string names[], string drinks[]);
+
 int main() {
     srand(time(nullptr));
     string names[SIZE_ARR] {
@@ -31,29 +34,8 @@ int main() {
     Node* front{};
     Node* back{};
 
-    // //  cout << "Coffee booth line: \n";
-    // Node* current{front};
-    // while (current != nullptr) {
-    //     cout << current->name << ": " << current->drinkOrder << '\n';
-    //     current = current->next;
-    // }
-
     for (int i{0}; i < START_CUSTOMERS; ++i) {
-        int rndNameIndex{rand() % SIZE_ARR};
-        int rndDrinkIndex{rand() % SIZE_ARR};
-
-        Node* customer{new Node};
-        customer->name = names[rndNameIndex];
-        customer->drinkOrder = drinks[rndDrinkIndex];
-        customer->next = nullptr;
-
-        if (front == nullptr) {
-            front = customer;
-            back = customer;
-        } else {
-            back->next = customer;
-            back = customer;
-        }
+        addRandomCustomer(front, back, names, drinks);
     }
 
     for (int numRound{1}; numRound <= MAX_ROUNDS; ++numRound) {
@@ -62,22 +44,27 @@ int main() {
                                << front->drinkOrder << '\n';
             Node* temp{front};
             front = front->next;
-            if (front == nullptr)
+            delete temp;
+
+            if (front == nullptr) {
                 back = nullptr;
+            }
         } else {
             cout << "No customer served.\n";
         }
 
         if (rand() % 2 == 0) {
-            int rndNameIndex{rand() % SIZE_ARR};
-            int rndDrinkIndex{rand() % SIZE_ARR};
+            addRandomCustomer(front, back, names, drinks);
+            cout << "New customer joined\n";
+        } else {
+            cout << "No new custmer joined\n";
         }
     }
 
     return 0;
 }
 
-void addRandomCustomer(Node* front, Node*& back,
+void addRandomCustomer(Node*& front, Node*& back,
                        string names[], string drinks[]) {
     int rndNameIndex{rand() % SIZE_ARR};
     int rndDrinkIndex{rand() % SIZE_ARR};
@@ -86,4 +73,12 @@ void addRandomCustomer(Node* front, Node*& back,
     customer->name = names[rndNameIndex];
     customer->drinkOrder = drinks[rndDrinkIndex];
     customer->next = nullptr;
+
+    if (front == nullptr) {
+        front = customer;
+        back = customer;
+    } else {
+        back->next = customer;
+        back = customer;
+    }
 }
