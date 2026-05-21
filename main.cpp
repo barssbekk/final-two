@@ -24,8 +24,12 @@ void addRandomCustomer(Node*& front, Node*& back,
 
 void addRandomMuffinCustomer(deque<Node>& muffinLine,
                              string names[], string muffins[]);
+
 void addRandomBraceletCustomer(vector<Node>& braceletLine,
                                string names[], string bracelets[]);
+
+void addRandomAvocadoCustomer(queue<Node>& avocadoLine,
+                              string names[], string avocados[]);
 
 int main() {
     srand(time(nullptr));
@@ -52,11 +56,19 @@ int main() {
         "Orange Bracelet", "Rainbow Bracelet"
     };
 
+    string avocados[SIZE_ARR] {
+        "Hass Avocado", "Organic Avocado", "Mini Avocado",
+        "Large Avocado", "Ripe Avocado", "Green Avocado",
+        "Avocado Toast Kit", "Guacamole Pack",
+        "Avocado Salsa Cup", "Spicy Avocado Bowl"
+    };
+
     Node* front{};
     Node* back{};
 
     deque<Node> muffinLine; // decl vrbl
     vector<Node> braceletLine;
+    queue<Node> avocadoLine;
 
     for (int i{0}; i < START_CUSTOMERS; ++i) {
         addRandomCustomer(front, back, names, drinks);
@@ -168,4 +180,14 @@ void addRandomBraceletCustomer(vector<Node>& braceletLine,
     braceletCustomer.next = nullptr;
 
     braceletLine.push_back(braceletCustomer);
+}
+
+void addRandomAvocadoCustomer(queue<Node>& avocadoLine,
+                              string names[], string avocados[]) {
+    Node avocadoCustomer;
+    avocadoCustomer.name = names[rand() % SIZE_ARR];
+    avocadoCustomer.drinkOrder = avocados[rand() % SIZE_ARR];
+    avocadoCustomer.next = nullptr;
+
+    avocadoLine.push_back(avocadoCustomer);
 }
