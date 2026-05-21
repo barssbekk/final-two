@@ -56,13 +56,34 @@ int main() {
         }
     }
 
-    for (int numRound{1}; numRound <= MAX_ROUNDS; ++i) {
+    for (int numRound{1}; numRound <= MAX_ROUNDS; ++numRound) {
         if (front != nullptr) {
             cout << "Served: " << front->name << ": "
                                << front->drinkOrder << '\n';
+            Node* temp{front};
+            front = front->next;
+            if (front == nullptr)
+                back = nullptr;
+        } else {
+            cout << "No customer served.\n";
         }
 
-
+        if (rand() % 2 == 0) {
+            int rndNameIndex{rand() % SIZE_ARR};
+            int rndDrinkIndex{rand() % SIZE_ARR};
+        }
+    }
 
     return 0;
+}
+
+void addRandomCustomer(Node* front, Node*& back,
+                       string names[], string drinks[]) {
+    int rndNameIndex{rand() % SIZE_ARR};
+    int rndDrinkIndex{rand() % SIZE_ARR};
+
+    Node* customer{new Node};
+    customer->name = names[rndNameIndex];
+    customer->drinkOrder = drinks[rndDrinkIndex];
+    customer->next = nullptr;
 }
