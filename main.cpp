@@ -7,6 +7,8 @@ using namespace std;
 
 const int SIZE_ARR{10};
 const int NUM_CUSTOMERS{8};
+const int START_CUSTOMERS{3};
+const int MAX_ROUNDS{10};
 
 struct Node {
     string name;
@@ -29,7 +31,14 @@ int main() {
     Node* front{};
     Node* back{};
 
-    for (int i{0}; i < NUM_CUSTOMERS; ++i) {
+    // //  cout << "Coffee booth line: \n";
+    // Node* current{front};
+    // while (current != nullptr) {
+    //     cout << current->name << ": " << current->drinkOrder << '\n';
+    //     current = current->next;
+    // }
+
+    for (int i{0}; i < START_CUSTOMERS; ++i) {
         int rndNameIndex{rand() % SIZE_ARR};
         int rndDrinkIndex{rand() % SIZE_ARR};
 
@@ -47,12 +56,13 @@ int main() {
         }
     }
 
-    cout << "Coffee booth line: \n";
-    Node* current{front};
-    while (current != nullptr) {
-        cout << current->name << ": " << current->drinkOrder << '\n';
-        current = current->next;
-    }
+    for (int numRound{1}; numRound <= MAX_ROUNDS; ++i) {
+        if (front != nullptr) {
+            cout << "Served: " << front->name << ": "
+                               << front->drinkOrder << '\n';
+        }
+
+
 
     return 0;
 }
