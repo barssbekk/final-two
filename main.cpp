@@ -9,13 +9,12 @@
 using namespace std;
 
 const int SIZE_ARR{10};
-const int NUM_CUSTOMERS{8};
 const int START_CUSTOMERS{3};
 const int MAX_ROUNDS{10};
 
 struct Node {
     string name;
-    string drinkOrder;
+    string order;
     Node* next;
 };
 
@@ -66,7 +65,7 @@ int main() {
     Node* front{};
     Node* back{};
 
-    deque<Node> muffinLine; // decl vrbl
+    deque<Node> muffinLine;
     vector<Node> braceletLine;
     queue<Node> avocadoLine;
 
@@ -80,8 +79,8 @@ int main() {
     for (int numRound{1}; numRound <= MAX_ROUNDS; ++numRound) {
         cout << "---Round #" << numRound << "---\n";
         if (front != nullptr) {
-            cout << "Served: " << front->name << ": "
-                               << front->drinkOrder << '\n';
+            cout << "Coffee served: " << front->name << ": "
+                               << front->order << '\n';
             Node* temp{front};
             front = front->next;
             delete temp;
@@ -90,19 +89,19 @@ int main() {
                 back = nullptr;
             }
         } else {
-            cout << "No customer served.\n";
+            cout << "No coffee customer served.\n";
         }
 
-        if (rand() % 2 == 0) { // 50
+        if (rand() % 2 == 0) {
             addRandomCustomer(front, back, names, drinks);
-            cout << "New customer joined\n";
+            cout << "New coffee customer joined\n";
         } else {
-            cout << "No new custmer joined\n";
+            cout << "No new coffee customer joined\n";
         }
 
-        if (!muffinLine.empty()) { // mufin logic
+        if (!muffinLine.empty()) {
             cout << "Muffin served: " << muffinLine.front().name << ": "
-                 << muffinLine.front().drinkOrder << '\n';
+                 << muffinLine.front().order << '\n';
 
             muffinLine.pop_front();
         } else {
@@ -116,9 +115,9 @@ int main() {
             cout << "No new muffin customer joined\n";
         }
 
-        if (!braceletLine.empty()) { // brac
+        if (!braceletLine.empty()) {
             cout << "Bracelet served: " << braceletLine.front().name << ": "
-                 << braceletLine.front().drinkOrder << '\n';
+                 << braceletLine.front().order << '\n';
             braceletLine.erase(braceletLine.begin());
         } else {
             cout << "No bracelet customer served\n";
@@ -132,18 +131,18 @@ int main() {
         }
 
         if (!avocadoLine.empty()) {
-            cout << "Avacado served: " << avocadoLine.front().name << ": "
-                 << avocadoLine.front().drinkOrder << '\n';
-            avocados->erase();
+            cout << "Avocado served: " << avocadoLine.front().name << ": "
+                 << avocadoLine.front().order << '\n';
+            avocadoLine.pop();
         } else {
-            cout << "No avacoda customer joined\n";
+            cout << "No avocado customer served\n";
         }
 
         if (rand() % 2 == 0) {
             addRandomAvocadoCustomer(avocadoLine, names, avocados);
             cout << "New avocado customer joined\n";
         } else {
-            cout << "No new avocado customer joind\n";
+            cout << "No new avocado customer joined\n";
         }
 
         cout << '\n';
@@ -166,7 +165,7 @@ void addRandomCustomer(Node*& front, Node*& back,
 
     Node* customer{new Node};
     customer->name = names[rndNameIndex];
-    customer->drinkOrder = drinks[rndDrinkIndex];
+    customer->order = drinks[rndDrinkIndex];
     customer->next = nullptr;
 
     if (front == nullptr) {
@@ -182,7 +181,7 @@ void addRandomMuffinCustomer(deque<Node>& muffinLine,
                              string names[], string muffins[]) {
     Node muffinCustomer;
     muffinCustomer.name = names[rand() % SIZE_ARR];
-    muffinCustomer.drinkOrder = muffins[rand() % SIZE_ARR];
+    muffinCustomer.order = muffins[rand() % SIZE_ARR];
     muffinCustomer.next = nullptr;
 
     muffinLine.push_back(muffinCustomer);
@@ -192,7 +191,7 @@ void addRandomBraceletCustomer(vector<Node>& braceletLine,
                                string names[], string bracelets[]) {
     Node braceletCustomer;
     braceletCustomer.name = names[rand() % SIZE_ARR];
-    braceletCustomer.drinkOrder = bracelets[rand() % SIZE_ARR];
+    braceletCustomer.order = bracelets[rand() % SIZE_ARR];
     braceletCustomer.next = nullptr;
 
     braceletLine.push_back(braceletCustomer);
@@ -202,7 +201,7 @@ void addRandomAvocadoCustomer(queue<Node>& avocadoLine,
                               string names[], string avocados[]) {
     Node avocadoCustomer;
     avocadoCustomer.name = names[rand() % SIZE_ARR];
-    avocadoCustomer.drinkOrder = avocados[rand() % SIZE_ARR];
+    avocadoCustomer.order = avocados[rand() % SIZE_ARR];
     avocadoCustomer.next = nullptr;
 
     avocadoLine.push(avocadoCustomer);
