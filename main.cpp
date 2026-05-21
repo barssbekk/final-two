@@ -54,6 +54,7 @@ int main() {
     }
 
     for (int numRound{1}; numRound <= MAX_ROUNDS; ++numRound) {
+        cout << "---Round #" << numRound << "---\n";
         if (front != nullptr) {
             cout << "Served: " << front->name << ": "
                                << front->drinkOrder << '\n';
@@ -75,14 +76,30 @@ int main() {
             cout << "No new custmer joined\n";
         }
 
-        if (!muffinLine.empty()) {
-            cout << "Muffin served: " << muffinLine.front().name << ":"
+        if (!muffinLine.empty()) { // mufin logic
+            cout << "Muffin served: " << muffinLine.front().name << ": "
                  << muffinLine.front().drinkOrder << '\n';
 
             muffinLine.pop_front();
         } else {
-            cout << ""
+            cout << "No muffin customer served\n";
         }
+
+        if (rand() % 2 == 0) {
+            addRandomMuffinCustomer(muffinLine, names, muffins);
+            cout << "New muffin customer joined\n";
+        } else {
+            cout << "No new muffin customer joined\n";
+        }
+
+        cout << '\n';
+    }
+
+    Node* current{front};
+    while (current != nullptr) {
+        Node* temp{current};
+        current = current->next;
+        delete temp;
     }
 
     return 0;
