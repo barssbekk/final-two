@@ -4,6 +4,7 @@
 #include <ctime>
 #include <deque>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -23,6 +24,8 @@ void addRandomCustomer(Node*& front, Node*& back,
 
 void addRandomMuffinCustomer(deque<Node>& muffinLine,
                              string names[], string muffins[]);
+void addRandomBraceletCustomer(vector<Node>& braceletLine,
+                               string names[], string bracelets[]);
 
 int main() {
     srand(time(nullptr));
@@ -43,14 +46,22 @@ int main() {
         "Raspberry Muffin", "Corn Muffin"
     };
 
+    string bracelets[SIZE_ARR] {
+        "Red Bracelet", "Blue Bracelet", "Green Bracelet", "Yellow Bracelet",
+        "Purple Bracelet", "Pink Bracelet", "Black Bracelet", "White Bracelet",
+        "Orange Bracelet", "Rainbow Bracelet"
+    };
+
     Node* front{};
     Node* back{};
 
-    deque<Node> muffinLine;
+    deque<Node> muffinLine; // decl vrbl
+    vector<Node> braceletLine;
 
     for (int i{0}; i < START_CUSTOMERS; ++i) {
         addRandomCustomer(front, back, names, drinks);
         addRandomMuffinCustomer(muffinLine, names, muffins);
+        addRandomBraceletCustomer(braceletLine, names, bracelets);
     }
 
     for (int numRound{1}; numRound <= MAX_ROUNDS; ++numRound) {
@@ -90,6 +101,21 @@ int main() {
             cout << "New muffin customer joined\n";
         } else {
             cout << "No new muffin customer joined\n";
+        }
+
+        if (!braceletLine.empty()) { // brac
+            cout << "Bracelet served: " << braceletLine.front().name << ": "
+                 << braceletLine.front().drinkOrder << '\n';
+            braceletLine.erase(braceletLine.begin());
+        } else {
+            cout << "No bracelet customer served\n";
+        }
+
+        if (rand() % 2 == 0) {
+            addRandomBraceletCustomer(braceletLine, names, bracelets);
+            cout << "New bracelet customer joined\n";
+        } else {
+            cout << "No new bracelet customer joined\n";
         }
 
         cout << '\n';
@@ -132,4 +158,14 @@ void addRandomMuffinCustomer(deque<Node>& muffinLine,
     muffinCustomer.next = nullptr;
 
     muffinLine.push_back(muffinCustomer);
+}
+
+void addRandomBraceletCustomer(vector<Node>& braceletLine,
+                               string names[], string bracelets[]) {
+    Node braceletCustomer;
+    braceletCustomer.name = names[rand() % SIZE_ARR];
+    braceletCustomer.drinkOrder = bracelets[rand() % SIZE_ARR];
+    braceletCustomer.next = nullptr;
+
+    braceletLine.push_back(braceletCustomer);
 }
