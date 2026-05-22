@@ -89,20 +89,19 @@ int main() {
                 back = nullptr;
             }
         } else {
-            cout << "No coffee customer served.\n";
+            cout << "No customer served.\n";
         }
 
         if (rand() % 2 == 0) {
             addRandomCustomer(front, back, names, drinks);
-            cout << "New coffee customer joined\n";
+            cout << "New customer joined\n";
         } else {
-            cout << "No new coffee customer joined\n";
+            cout << "No new customer joined\n";
         }
 
         if (!muffinLine.empty()) {
             cout << "Muffin served: " << muffinLine.front().name << ": "
                  << muffinLine.front().order << '\n';
-
             muffinLine.pop_front();
         } else {
             cout << "No muffin customer served\n";
